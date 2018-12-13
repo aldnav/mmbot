@@ -13,12 +13,15 @@ cp conf.sample.yaml conf.yaml
 FLASK_APP=server.py flask run
 ```
 
-
 ### Example
 
 route | slash command
 ------|--------------
 /l10n | /translate_cn
+
+### Development
+
+Project uses [Pipenv](https://pipenv.readthedocs.io/en/latest/) for handling environment requirements. DO NOT MANUALLY EDIT `requirements.txt`. It's generated from `pipenv lock -r > requirements.txt`
 
 ### TODO
 - Add other languages support
