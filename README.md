@@ -20,3 +20,7 @@ route | slash command
 ------|--------------
 /l10n | /translate_cn
 
+### TODO
+- Add other languages support
+  `/translate en 嗨` -> `嗨 \n hi` 
+- Add support for translation service providers
