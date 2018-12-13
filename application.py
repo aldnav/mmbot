@@ -2,7 +2,6 @@ import requests as reqs
 import yaml
 import sys
 from flask import Flask, request, jsonify
-app = Flask(__name__)
 
 settings = None
 try:
@@ -11,6 +10,7 @@ try:
 except FileNotFoundError:
     sys.exit('No settings file found. See sample "conf.sample.yaml"')
 
+application = app = Flask(__name__)
 endpoint = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
 
 
@@ -28,3 +28,7 @@ def localization():
         'response_type': 'in_channel',
         'text': response_text
     })
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
