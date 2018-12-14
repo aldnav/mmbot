@@ -5,12 +5,20 @@ Mattermost Slash Command Server
 
 ### Setup
 ```sh
+-------term 0--------
 git clone git@github.com:aldnav/mmbot.git
 cd mmbot
 pipenv activate  # or `pipenv install --ignore-pipfile`  first time
 cp conf.sample.yaml conf.yaml
 # edit conf.yaml
 python application.py
+-------term 1--------
+# for development purposes
+ngrok {port of running application.py}
+# copy endpoint
+# test in postman (optional)
+# test in a separate channel/room
+# by pasting link to mm integrations > slash command
 ```
 
 ### Example
