@@ -7,10 +7,10 @@ Mattermost Slash Command Server
 ```sh
 git clone git@github.com:aldnav/mmbot.git
 cd mmbot
-pipenv activate
+pipenv activate  # or `pipenv install --ignore-pipfile`  first time
 cp conf.sample.yaml conf.yaml
 # edit conf.yaml
-FLASK_APP=server.py flask run
+python application.py
 ```
 
 ### Example
