@@ -27,3 +27,12 @@ Project uses [Pipenv](https://pipenv.readthedocs.io/en/latest/) for handling env
 - Add other languages support
   `/translate en 嗨` -> `嗨 \n hi` 
 - Add support for translation service providers
+
+### Deployment to AWS Elasticbeanstalk
+
+Simply zip the application and upload. Or through cli.
+
+```sh
+pipenv lock -r > requirements.txt
+zip ebpackage.zip application.py config.yaml requirements.txt
+```
