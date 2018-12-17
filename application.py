@@ -1,6 +1,7 @@
 import requests as reqs
 import yaml
 import sys
+import boto3
 from flask import Flask, request, jsonify
 
 settings = None
@@ -28,6 +29,32 @@ def localization():
         'response_type': 'in_channel',
         'text': response_text
     })
+
+
+@app.route('/translate-zh', methods=['POST', 'GET'])
+def translate_zh():
+    text_to_translate = request.values.get('text')  # zh Hi
+    translated = translate_from_aws(text_to_translate)
+    return jsonify({
+        'response_type': 'in_channel',
+        'text': "{}\n{}".format(text_to_translate, translated)
+    })
+
+
+@app.route('/translate-en', methods=['POST', 'GET'])
+def translate_en():
+    text_to_translate = request.values.get('text')  # zh Hi
+    translated = translate_from_aws(text_to_translate, "en", "zh")
+    return jsonify({
+        'response_type': 'in_channel',
+        'text': "{}\n{}".format(text_to_translate, translated)
+    })
+
+
+def translate_from_aws(text, target_lang_code="zh", source_lang_code="en"):
+    tfa= boto3.client(service_name='translate', region_name='us-east-2', use_ssl=True) #tfa means translate_from_aws
+    result = tfa.translate_text(Text=text, SourceLanguageCode=source_lang_code, TargetLanguageCode=target_lang_code)
+    return result.get('TranslatedText')
 
 
 if __name__ == '__main__':
