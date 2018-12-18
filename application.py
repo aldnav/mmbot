@@ -2,6 +2,7 @@ import requests as reqs
 import yaml
 import sys
 import boto3
+import os
 from flask import Flask, request, jsonify
 
 settings = None
@@ -13,6 +14,14 @@ except FileNotFoundError:
 
 application = app = Flask(__name__)
 endpoint = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
+
+
+if settings.get('AWS_ACCESS_KEY_ID'):
+    print('Using config.yaml AWS_ACCESS_KEY_ID')
+    os.environ['AWS_ACCESS_KEY_ID'] = settings.get('AWS_ACCESS_KEY_ID')
+if settings.get('AWS_SECRET_ACCESS_KEY'):
+    print('Using config.yaml AWS_SECRET_ACCESS_KEY')
+    os.environ['AWS_SECRET_ACCESS_KEY'] = settings.get('AWS_SECRET_ACCESS_KEY')
 
 
 @app.route('/l10n', methods=['POST'])
