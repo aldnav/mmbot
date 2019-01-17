@@ -10,6 +10,7 @@ flask = "*"
 requests = "*"
 pyyaml = "==4.2b1"
 boto3 = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.6"
