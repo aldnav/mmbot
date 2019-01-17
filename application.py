@@ -4,6 +4,7 @@ import sys
 import boto3
 import os
 from flask import Flask, request, jsonify
+from utils import terms
 
 settings = None
 try:
@@ -61,8 +62,24 @@ def translate_en():
 
 
 def translate_from_aws(text, target_lang_code="zh", source_lang_code="en"):
-    tfa= boto3.client(service_name='translate', region_name='us-east-2', use_ssl=True) #tfa means translate_from_aws
-    result = tfa.translate_text(Text=text, SourceLanguageCode=source_lang_code, TargetLanguageCode=target_lang_code)
+    terms.save_new_terms(text)
+    tfa = boto3.client(
+        service_name='translate',
+        region_name='us-east-2',
+        use_ssl=True)  # tfa means translate_from_aws
+
+    with open('./terminologies.csv', 'rb') as f:
+        data = f.read()
+    file_data = bytearray(data)
+
+    tfa.import_terminology(
+        Name='mmcf-terminology', MergeStrategy='OVERWRITE',
+        TerminologyData={"File": file_data, "Format": 'CSV'})
+    result = tfa.translate_text(
+        Text=text,
+        TerminologyNames=["mmcf-terminology"],
+        SourceLanguageCode=source_lang_code,
+        TargetLanguageCode=target_lang_code)
     return result.get('TranslatedText')
 
 
